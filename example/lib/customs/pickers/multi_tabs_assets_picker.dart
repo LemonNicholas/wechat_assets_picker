@@ -161,7 +161,7 @@ class _MultiTabAssetPickerState extends State<MultiTabAssetPicker> {
     final AssetEntity asset = entities.elementAt(index);
 
     Future<void> _onTap() async {
-      final List<AssetEntity>? result = await AssetPickerViewer.pushToViewer(
+      final DefaultAssetPickerProvider? result = await AssetPickerViewer.pushToViewer(
         context,
         currentIndex: index,
         previewAssets: entities,
@@ -170,7 +170,7 @@ class _MultiTabAssetPickerState extends State<MultiTabAssetPicker> {
         maxAssets: maxAssets,
       );
       if (result != null) {
-        entities = result;
+        entities = result.selectedAssets;
         if (mounted) {
           setState(() {});
         }

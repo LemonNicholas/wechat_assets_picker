@@ -56,25 +56,25 @@ class _MultiAssetsPageState extends State<MultiAssetsPage>
       PickMethod.pathNameBuilder(maxAssetsCount),
       PickMethod.customFilterOptions(maxAssetsCount),
       PickMethod.preventGIFPicked(maxAssetsCount),
-      PickMethod.keepScrollOffset(
-        delegate: () => keepScrollDelegate!,
-        onPermission: (PermissionState state) {
-          keepScrollDelegate ??= DefaultAssetPickerBuilderDelegate(
-            provider: keepScrollProvider,
-            initialPermission: state,
-            keepScrollOffset: true,
-          );
-        },
-        onLongPress: () {
-          keepScrollProvider.dispose();
-          keepScrollProvider = DefaultAssetPickerProvider();
-          keepScrollDelegate?.dispose();
-          keepScrollDelegate = null;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Resources have been released')),
-          );
-        },
-      ),
+      // PickMethod.keepScrollOffset(
+      //   delegate: () => keepScrollDelegate!,
+      //   onPermission: (PermissionState state) {
+      //     keepScrollDelegate ??= DefaultAssetPickerBuilderDelegate(
+      //       provider: keepScrollProvider,
+      //       initialPermission: state,
+      //       keepScrollOffset: true,
+      //     );
+      //   },
+      //   onLongPress: () {
+      //     keepScrollProvider.dispose();
+      //     keepScrollProvider = DefaultAssetPickerProvider();
+      //     keepScrollDelegate?.dispose();
+      //     keepScrollDelegate = null;
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //       const SnackBar(content: Text('Resources have been released')),
+      //     );
+      //   },
+      // ),
       PickMethod(
         icon: '🎚',
         name: 'Custom image preview thumb size',

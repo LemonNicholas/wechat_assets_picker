@@ -58,17 +58,17 @@ class AssetPickerDelegate {
   ///  * [DefaultAssetPickerBuilderDelegate] which is the default builder that
   ///    builds all widgets during the picking process.
   /// {@endtemplate}
-  Future<List<AssetEntity>?> pickAssets(
+  Future<DefaultAssetPickerProvider?> pickAssets(
     BuildContext context, {
     Key? key,
     AssetPickerConfig pickerConfig = const AssetPickerConfig(),
     bool useRootNavigator = true,
-    AssetPickerPageRouteBuilder<List<AssetEntity>>? pageRouteBuilder,
+    AssetPickerPageRouteBuilder<DefaultAssetPickerProvider?>? pageRouteBuilder,
   }) async {
     final PermissionState ps = await permissionCheck();
-    final AssetPickerPageRoute<List<AssetEntity>> route =
+    final AssetPickerPageRoute<DefaultAssetPickerProvider?> route =
         pageRouteBuilder?.call(const SizedBox.shrink()) ??
-            AssetPickerPageRoute<List<AssetEntity>>(
+            AssetPickerPageRoute<DefaultAssetPickerProvider?>(
               builder: (_) => const SizedBox.shrink(),
             );
     final DefaultAssetPickerProvider provider = DefaultAssetPickerProvider(
@@ -104,12 +104,12 @@ class AssetPickerDelegate {
         locale: Localizations.maybeLocaleOf(context),
       ),
     );
-    final List<AssetEntity>? result = await Navigator.of(
+    final DefaultAssetPickerProvider? result = await Navigator.of(
       context,
       rootNavigator: useRootNavigator,
-    ).push<List<AssetEntity>>(
+    ).push<DefaultAssetPickerProvider?>(
       pageRouteBuilder?.call(picker) ??
-          AssetPickerPageRoute<List<AssetEntity>>(builder: (_) => picker),
+          AssetPickerPageRoute<DefaultAssetPickerProvider?>(builder: (_) => picker),
     );
     return result;
   }

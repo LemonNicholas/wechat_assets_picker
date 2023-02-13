@@ -36,12 +36,12 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
   }
 
   /// {@macro wechat_assets_picker.delegates.AssetPickerDelegate.pickAssets}
-  static Future<List<AssetEntity>?> pickAssets(
+  static Future<DefaultAssetPickerProvider?> pickAssets(
     BuildContext context, {
     Key? key,
     AssetPickerConfig pickerConfig = const AssetPickerConfig(),
     bool useRootNavigator = true,
-    AssetPickerPageRouteBuilder<List<AssetEntity>>? pageRouteBuilder,
+    AssetPickerPageRouteBuilder<DefaultAssetPickerProvider>? pageRouteBuilder,
   }) {
     return _pickerDelegate.pickAssets(
       context,

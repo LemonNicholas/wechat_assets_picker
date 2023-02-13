@@ -69,6 +69,10 @@ class AssetPickerTextDelegate {
   /// 预览按钮的字段
   String get preview => '预览';
 
+  /// Preview string for Full Image button.
+  /// 原图按钮的字段
+  String get fullImage => '原图';
+
   /// Select string for select button.
   /// 选择按钮的字段
   String get select => '选择';
@@ -193,6 +197,9 @@ class EnglishAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get preview => 'Preview';
 
   @override
+  String get fullImage => 'Full Image';
+
+  @override
   String get select => 'Select';
 
   @override
@@ -287,6 +294,9 @@ class HebrewAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get preview => 'תצוגה מקדימה';
+
+  @override
+  String get fullImage => 'Full Image';
 
   @override
   String get select => 'בחר';
@@ -392,6 +402,9 @@ class GermanAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get preview => 'Vorschau';
 
   @override
+  String get fullImage => 'Full Image';
+
+  @override
   String get select => 'Auswählen';
 
   @override
@@ -484,6 +497,9 @@ class RussianAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get preview => 'Предпросмотр';
+
+  @override
+  String get fullImage => 'Full Image';
 
   @override
   String get select => 'Выбрать';
@@ -583,6 +599,9 @@ class JapaneseAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get preview => 'プレビュー';
 
   @override
+  String get fullImage => 'Full Image';
+
+  @override
   String get select => '選択';
 
   @override
@@ -677,6 +696,9 @@ class ArabicAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get preview => 'معاينة';
+
+  @override
+  String get fullImage => 'Full Image';
 
   @override
   String get select => 'تحديد';
@@ -774,6 +796,9 @@ class FrenchAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
   @override
   String get preview => 'Aperçu';
+
+  @override
+  String get fullImage => 'Full Image';
 
   @override
   String get select => 'Choisir';

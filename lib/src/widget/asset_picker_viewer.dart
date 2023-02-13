@@ -29,7 +29,7 @@ class AssetPickerViewer<Asset, Path> extends StatefulWidget {
 
   /// Static method to push with the navigator.
   /// 跳转至选择预览的静态方法
-  static Future<List<AssetEntity>?> pushToViewer(
+  static Future<DefaultAssetPickerProvider?> pushToViewer(
     BuildContext context, {
     int currentIndex = 0,
     required List<AssetEntity> previewAssets,
@@ -65,15 +65,17 @@ class AssetPickerViewer<Asset, Path> extends StatefulWidget {
         selectPredicate: selectPredicate,
       ),
     );
-    final PageRouteBuilder<List<AssetEntity>> pageRoute =
-        PageRouteBuilder<List<AssetEntity>>(
+    final PageRouteBuilder<DefaultAssetPickerProvider?> pageRoute =
+        PageRouteBuilder<DefaultAssetPickerProvider?>(
       pageBuilder: (_, __, ___) => viewer,
       transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
         return FadeTransition(opacity: animation, child: child);
       },
     );
-    final List<AssetEntity>? result =
-        await Navigator.of(context).push<List<AssetEntity>>(pageRoute);
+    // final List<AssetEntity>? result =
+    //     await Navigator.of(context).push<List<AssetEntity>>(pageRoute);
+    final DefaultAssetPickerProvider? result =
+        await Navigator.of(context).push<DefaultAssetPickerProvider?>(pageRoute);
     return result;
   }
 

@@ -191,6 +191,14 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get selectFullImage => _selectFullImage;
+  bool _selectFullImage = false;
+
+  set selectFullImage(bool selectFullImage) {
+    _selectFullImage = selectFullImage;
+    notifyListeners();
+  }
+
   /// Descriptions for selected assets currently.
   /// 当前已被选中的资源的描述
   ///

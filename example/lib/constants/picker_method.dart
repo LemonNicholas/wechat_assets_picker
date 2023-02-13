@@ -295,29 +295,29 @@ class PickMethod {
     );
   }
 
-  factory PickMethod.keepScrollOffset({
-    required DefaultAssetPickerBuilderDelegate Function() delegate,
-    required Function(PermissionState state) onPermission,
-    GestureLongPressCallback? onLongPress,
-  }) {
-    return PickMethod(
-      icon: '💾',
-      name: 'Keep scroll offset',
-      description: 'Pick assets from same scroll position.',
-      method: (BuildContext context, List<AssetEntity> assets) async {
-        final PermissionState ps = await PhotoManager.requestPermissionExtend();
-        if (ps != PermissionState.authorized && ps != PermissionState.limited) {
-          throw StateError('Permission state error with $ps.');
-        }
-        onPermission(ps);
-        return AssetPicker.pickAssetsWithDelegate(
-          context,
-          delegate: delegate(),
-        );
-      },
-      onLongPress: onLongPress,
-    );
-  }
+  // factory PickMethod.keepScrollOffset({
+  //   required DefaultAssetPickerBuilderDelegate Function() delegate,
+  //   required Function(PermissionState state) onPermission,
+  //   GestureLongPressCallback? onLongPress,
+  // }) {
+  //   return PickMethod(
+  //     icon: '💾',
+  //     name: 'Keep scroll offset',
+  //     description: 'Pick assets from same scroll position.',
+  //     method: (BuildContext context, List<AssetEntity> assets) async {
+  //       final PermissionState ps = await PhotoManager.requestPermissionExtend();
+  //       if (ps != PermissionState.authorized && ps != PermissionState.limited) {
+  //         throw StateError('Permission state error with $ps.');
+  //       }
+  //       onPermission(ps);
+  //       return AssetPicker.pickAssetsWithDelegate(
+  //         context,
+  //         delegate: delegate(),
+  //       );
+  //     },
+  //     onLongPress: onLongPress,
+  //   );
+  // }
 
   factory PickMethod.changeLanguages(int maxAssetsCount) {
     return PickMethod(
@@ -403,7 +403,7 @@ class PickMethod {
   final String description;
 
   /// The core function that defines how to use the picker.
-  final Future<List<AssetEntity>?> Function(
+  final Future<DefaultAssetPickerProvider?> Function(
     BuildContext context,
     List<AssetEntity> selectedAssets,
   ) method;

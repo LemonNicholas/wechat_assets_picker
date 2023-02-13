@@ -27,6 +27,8 @@ mixin ExamplePageMixin<T extends StatefulWidget> on State<T> {
 
   List<AssetEntity> assets = <AssetEntity>[];
 
+  bool isSelectedFullImage = false;
+
   int get assetsLength => assets.length;
 
   List<PickMethod> get pickMethods;
@@ -37,9 +39,9 @@ mixin ExamplePageMixin<T extends StatefulWidget> on State<T> {
   DefaultAssetPickerBuilderDelegate? keepScrollDelegate;
 
   Future<void> selectAssets(PickMethod model) async {
-    final List<AssetEntity>? result = await model.method(context, assets);
+    final DefaultAssetPickerProvider? result = await model.method(context, assets);
     if (result != null) {
-      assets = result.toList();
+      assets = result.selectedAssets.toList();
       if (mounted) {
         setState(() {});
       }
@@ -54,9 +56,11 @@ mixin ExamplePageMixin<T extends StatefulWidget> on State<T> {
     setState(() {});
   }
 
-  void onResult(List<AssetEntity>? result) {
-    if (result != null && result != assets) {
-      assets = result.toList();
+  void onResult(DefaultAssetPickerProvider? result) {
+    if (result != null /*&& result != assets*/) {
+      assets = result.selectedAssets.toList();
+      isSelectedFullImage = result.selectFullImage;
+      print("lemon isSelectedFullImage : $isSelectedFullImage");
       if (mounted) {
         setState(() {});
       }

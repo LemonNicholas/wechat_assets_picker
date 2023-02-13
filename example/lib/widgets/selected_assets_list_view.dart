@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart'
-    show AssetEntity, AssetPicker, AssetPickerViewer;
+    show AssetEntity, AssetPicker, AssetPickerViewer, DefaultAssetPickerProvider;
 
 import '../main.dart' show themeColor;
 import 'asset_widget_builder.dart';
@@ -20,7 +20,7 @@ class SelectedAssetsListView extends StatelessWidget {
 
   final List<AssetEntity> assets;
   final ValueNotifier<bool> isDisplayingDetail;
-  final void Function(List<AssetEntity>? result) onResult;
+  final void Function(DefaultAssetPickerProvider? result) onResult;
   final void Function(int index) onRemoveAsset;
 
   Widget _selectedAssetWidget(BuildContext context, int index) {
@@ -30,7 +30,7 @@ class SelectedAssetsListView extends StatelessWidget {
       builder: (_, bool value, __) => GestureDetector(
         onTap: () async {
           if (value) {
-            final List<AssetEntity>? result =
+            final DefaultAssetPickerProvider? result =
                 await AssetPickerViewer.pushToViewer(
               context,
               currentIndex: index,
