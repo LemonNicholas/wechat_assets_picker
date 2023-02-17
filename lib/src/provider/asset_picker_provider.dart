@@ -26,6 +26,7 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     this.maxAssets = defaultMaxAssetsCount,
     this.pageSize = defaultAssetsPerPage,
     this.pathThumbnailSize = defaultPathThumbnailSize,
+    this.isSelectFullImage = false,
     List<Asset>? selectedAssets,
   })  : assert(maxAssets > 0, 'maxAssets must be greater than 0.'),
         assert(pageSize > 0, 'pageSize must be greater than 0.') {
@@ -191,11 +192,11 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get selectFullImage => _selectFullImage;
-  bool _selectFullImage = false;
+  bool get selectFullImage => isSelectFullImage;
+  bool isSelectFullImage = false;
 
   set selectFullImage(bool selectFullImage) {
-    _selectFullImage = selectFullImage;
+    isSelectFullImage = selectFullImage;
     notifyListeners();
   }
 
@@ -243,6 +244,7 @@ class DefaultAssetPickerProvider
     super.maxAssets,
     super.pageSize,
     super.pathThumbnailSize,
+    super.isSelectFullImage,
     this.requestType = RequestType.image,
     this.sortPathDelegate = SortPathDelegate.common,
     this.sortPathsByModifiedDate = false,

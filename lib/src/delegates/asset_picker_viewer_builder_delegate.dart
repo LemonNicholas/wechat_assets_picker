@@ -594,6 +594,101 @@ class DefaultAssetPickerViewerBuilderDelegate
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  ChangeNotifierProvider(
+              create: (context) => DefaultAssetPickerProvider(isSelectFullImage: selectorProvider?.selectFullImage??false),
+      builder: (context, child){
+        return GestureDetector(
+          onTap: (){
+            Provider.of<DefaultAssetPickerProvider>(context, listen: false).selectFullImage = !(Provider.of<DefaultAssetPickerProvider>(context, listen: false).selectFullImage??false);
+            selectorProvider?.selectFullImage = !(selectorProvider?.selectFullImage??false);
+            // provider.selectFullImage = !provider.selectFullImage;
+          },
+          child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      decoration: BoxDecoration(
+                        border: Provider.of<DefaultAssetPickerProvider>(context, listen: true).selectFullImage == false
+                            ? Border.all(
+                          color: themeData.unselectedWidgetColor,
+                          // width: 30,
+                        ) : null,
+                        color: Provider.of<DefaultAssetPickerProvider>(context, listen: true).selectFullImage == true ? themeData.colorScheme.secondary : null,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Provider.of<DefaultAssetPickerProvider>(context, listen: true).selectFullImage == true ? const Icon(Icons.check,size: 15) : const SizedBox.shrink(),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ScaleText(
+                    // "Full Image",
+                    '${textDelegate.fullImage}',
+                    //     '${p.isSelectedNotEmpty ? ' (${p.selectedAssets.length})' : ''}',
+                    style: TextStyle(
+                      color: Provider.of<DefaultAssetPickerProvider>(context, listen: true).isSelectedNotEmpty == true ? null : context.themeData.textTheme.bodySmall?.color,
+                      fontSize: 17,
+                    ),
+                    maxScaleFactor: 1.2,
+                    semanticsLabel: '${semanticsTextDelegate.preview}'
+                        '${Provider.of<DefaultAssetPickerProvider>(context, listen: true).isSelectedNotEmpty == true ? ' (${Provider.of<DefaultAssetPickerProvider>(context, listen: true).selectedAssets.length})' : ''}',
+                  ),
+                  // Text("Full Image", style: TextStyle(color: Colors.white)),
+                ],
+              )),
+        );
+      },),
+
+                  // Consumer<DefaultAssetPickerProvider>(
+                  //   builder: (BuildContext context, DefaultAssetPickerProvider p, _) {
+                  //     return GestureDetector(
+                  //       onTap: (){
+                  //         selectorProvider?.selectFullImage = !(selectorProvider?.selectFullImage??false);
+                  //         // provider.selectFullImage = !provider.selectFullImage;
+                  //       },
+                  //       child: Center(
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Center(
+                  //                 child: Container(
+                  //                   width: 25,
+                  //                   height: 25,
+                  //                   decoration: BoxDecoration(
+                  //                     border: selectorProvider?.selectFullImage == false
+                  //                         ? Border.all(
+                  //                       color: themeData.unselectedWidgetColor,
+                  //                       // width: 30,
+                  //                     ) : null,
+                  //                     color: selectorProvider?.selectFullImage == true ? themeData.colorScheme.secondary : null,
+                  //                     shape: BoxShape.circle,
+                  //                   ),
+                  //                   child: selectorProvider?.selectFullImage == true ? const Icon(Icons.check,size: 15) : const SizedBox.shrink(),
+                  //                 ),
+                  //               ),
+                  //               SizedBox(width: 8),
+                  //               ScaleText(
+                  //                 // "Full Image",
+                  //                 '${textDelegate.fullImage}',
+                  //                 //     '${p.isSelectedNotEmpty ? ' (${p.selectedAssets.length})' : ''}',
+                  //                 style: TextStyle(
+                  //                   color: selectorProvider?.isSelectedNotEmpty == true ? null : context.themeData.textTheme.bodySmall?.color,
+                  //                   fontSize: 17,
+                  //                 ),
+                  //                 maxScaleFactor: 1.2,
+                  //                 semanticsLabel: '${semanticsTextDelegate.preview}'
+                  //                     '${selectorProvider?.isSelectedNotEmpty == true ? ' (${selectorProvider?.selectedAssets.length})' : ''}',
+                  //               ),
+                  //               // Text("Full Image", style: TextStyle(color: Colors.white)),
+                  //             ],
+                  //           )),
+                  //     );
+                  //   },
+                  // ),
+
                   const Spacer(),
                   if (isAppleOS && (provider != null || isWeChatMoment))
                     confirmButton(context)

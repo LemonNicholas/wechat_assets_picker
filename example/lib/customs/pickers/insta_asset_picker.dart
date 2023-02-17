@@ -174,7 +174,7 @@ class _InstaAssetPickerState extends State<InstaAssetPicker> {
     final AssetEntity asset = entities.elementAt(index);
 
     Future<void> _onTap() async {
-      final DefaultAssetPickerProvider? result = await AssetPickerViewer.pushToViewer(
+      final List<AssetEntity>? result = await AssetPickerViewer.pushToViewer(
         context,
         currentIndex: index,
         previewAssets: entities,
@@ -184,7 +184,7 @@ class _InstaAssetPickerState extends State<InstaAssetPicker> {
         maxAssets: maxAssets,
       );
       if (result != null) {
-        entities = result.selectedAssets;
+        entities = result;
         if (mounted) {
           setState(() {});
         }

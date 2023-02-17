@@ -821,7 +821,7 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
     }
     provider.selectAsset(asset);
     if (isSingleAssetMode && !isPreviewEnabled) {
-      Navigator.of(context).maybePop(provider.selectedAssets);
+      Navigator.of(context).maybePop(provider);
     }
   }
 
@@ -909,7 +909,7 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
       selected = provider.selectedAssets;
       effectiveIndex = index;
     }
-    final DefaultAssetPickerProvider? result = await AssetPickerViewer.pushToViewer(
+    final List<AssetEntity>? result = await AssetPickerViewer.pushToViewer(
       context,
       currentIndex: effectiveIndex,
       previewAssets: current,
@@ -922,8 +922,10 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
       maxAssets: provider.maxAssets,
       shouldReversePreview: isAppleOS,
     );
+
     if (result != null) {
-      Navigator.of(context).maybePop(result);
+      provider.selectedAssets = result;
+      Navigator.of(context).maybePop(provider);
     }
   }
 
@@ -1901,7 +1903,7 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
       } else {
         selected = selectedAssets;
       }
-      final DefaultAssetPickerProvider? result = await AssetPickerViewer.pushToViewer(
+      final List<AssetEntity>? result = await AssetPickerViewer.pushToViewer(
         context,
         previewAssets: selected,
         previewThumbnailSize: previewThumbnailSize,
@@ -1912,7 +1914,8 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
         maxAssets: p.maxAssets,
       );
       if (result != null) {
-        Navigator.of(context).maybePop(result);
+        provider.selectedAssets = result;
+        Navigator.of(context).maybePop(provider);
       }
     }
 

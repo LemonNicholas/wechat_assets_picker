@@ -29,19 +29,19 @@ class AssetPickerViewer<Asset, Path> extends StatefulWidget {
 
   /// Static method to push with the navigator.
   /// 跳转至选择预览的静态方法
-  static Future<DefaultAssetPickerProvider?> pushToViewer(
-    BuildContext context, {
-    int currentIndex = 0,
-    required List<AssetEntity> previewAssets,
-    required ThemeData themeData,
-    DefaultAssetPickerProvider? selectorProvider,
-    ThumbnailSize? previewThumbnailSize,
-    List<AssetEntity>? selectedAssets,
-    SpecialPickerType? specialPickerType,
-    int? maxAssets,
-    bool shouldReversePreview = false,
-    AssetSelectPredicate<AssetEntity>? selectPredicate,
-  }) async {
+  static Future<List<AssetEntity>?> pushToViewer(
+      BuildContext context, {
+        int currentIndex = 0,
+        required List<AssetEntity> previewAssets,
+        required ThemeData themeData,
+        DefaultAssetPickerProvider? selectorProvider,
+        ThumbnailSize? previewThumbnailSize,
+        List<AssetEntity>? selectedAssets,
+        SpecialPickerType? specialPickerType,
+        int? maxAssets,
+        bool shouldReversePreview = false,
+        AssetSelectPredicate<AssetEntity>? selectPredicate,
+      }) async {
     await AssetPicker.permissionCheck();
     final Widget viewer = AssetPickerViewer<AssetEntity, AssetPathEntity>(
       builder: DefaultAssetPickerViewerBuilderDelegate(
@@ -49,11 +49,11 @@ class AssetPickerViewer<Asset, Path> extends StatefulWidget {
         previewAssets: previewAssets,
         provider: selectedAssets != null
             ? AssetPickerViewerProvider<AssetEntity>(
-                selectedAssets,
-                maxAssets: maxAssets ??
-                    selectorProvider?.maxAssets ??
-                    defaultMaxAssetsCount,
-              )
+          selectedAssets,
+          maxAssets: maxAssets ??
+              selectorProvider?.maxAssets ??
+              defaultMaxAssetsCount,
+        )
             : null,
         themeData: themeData,
         previewThumbnailSize: previewThumbnailSize,
@@ -65,17 +65,15 @@ class AssetPickerViewer<Asset, Path> extends StatefulWidget {
         selectPredicate: selectPredicate,
       ),
     );
-    final PageRouteBuilder<DefaultAssetPickerProvider?> pageRoute =
-        PageRouteBuilder<DefaultAssetPickerProvider?>(
+    final PageRouteBuilder<List<AssetEntity>> pageRoute =
+    PageRouteBuilder<List<AssetEntity>>(
       pageBuilder: (_, __, ___) => viewer,
       transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
         return FadeTransition(opacity: animation, child: child);
       },
     );
-    // final List<AssetEntity>? result =
-    //     await Navigator.of(context).push<List<AssetEntity>>(pageRoute);
-    final DefaultAssetPickerProvider? result =
-        await Navigator.of(context).push<DefaultAssetPickerProvider?>(pageRoute);
+    final List<AssetEntity>? result =
+    await Navigator.of(context).push<List<AssetEntity>>(pageRoute);
     return result;
   }
 

@@ -41,6 +41,7 @@ mixin ExamplePageMixin<T extends StatefulWidget> on State<T> {
   Future<void> selectAssets(PickMethod model) async {
     final DefaultAssetPickerProvider? result = await model.method(context, assets);
     if (result != null) {
+      print("lemon isSelectedFullImage : ${result.selectFullImage}");
       assets = result.selectedAssets.toList();
       if (mounted) {
         setState(() {});

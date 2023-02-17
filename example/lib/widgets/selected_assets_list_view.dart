@@ -30,14 +30,14 @@ class SelectedAssetsListView extends StatelessWidget {
       builder: (_, bool value, __) => GestureDetector(
         onTap: () async {
           if (value) {
-            final DefaultAssetPickerProvider? result =
+            final List<AssetEntity>? result =
                 await AssetPickerViewer.pushToViewer(
               context,
               currentIndex: index,
               previewAssets: assets,
               themeData: AssetPicker.themeData(themeColor),
             );
-            onResult(result);
+            // onResult(result);
           }
         },
         child: RepaintBoundary(
