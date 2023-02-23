@@ -228,6 +228,11 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     selectedAssets = set;
   }
 
+  void updatedSelectedAssets(List<Asset> list) {
+    selectedAssets = list;
+    notifyListeners();
+  }
+
   /// Un-select asset.
   /// 取消选中资源
   void unSelectAsset(Asset item) {

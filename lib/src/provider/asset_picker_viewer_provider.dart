@@ -39,6 +39,11 @@ class AssetPickerViewerProvider<A> extends ChangeNotifier {
   /// 选中资源是否为空
   bool get isSelectedNotEmpty => currentlySelectedAssets.isNotEmpty;
 
+  void updatedSelectedAssets(List<A> list) {
+    currentlySelectedAssets = list;
+    notifyListeners();
+  }
+
   /// Select asset.
   /// 选中资源
   void selectAsset(A item) {

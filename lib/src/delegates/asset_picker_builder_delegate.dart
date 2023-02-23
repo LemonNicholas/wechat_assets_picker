@@ -926,6 +926,8 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
     if (result != null) {
       provider.selectedAssets = result;
       Navigator.of(context).maybePop(provider);
+    }else{
+      provider.notifyListeners();
     }
   }
 
@@ -1916,6 +1918,8 @@ class DefaultAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<Asset
       if (result != null) {
         provider.selectedAssets = result;
         Navigator.of(context).maybePop(provider);
+      }else{
+        provider.notifyListeners();
       }
     }
 
