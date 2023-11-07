@@ -10,8 +10,9 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
-import 'package:image_editor_plus/data/image_item.dart';
-import 'package:image_editor_plus/image_editor_plus.dart';
+import 'package:image_editor_dove/flutter_image_editor.dart';
+// import 'package:image_editor_plus/data/image_item.dart';
+// import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
@@ -627,25 +628,24 @@ class DefaultAssetPickerViewerBuilderDelegate extends AssetPickerViewerBuilderDe
                       if (file == null) {
                         return;
                       }
-                      final Uint8List uint8List = await file.readAsBytes();
-                      final List<ImageItem> imageItemList = [ImageItem(img: uint8List, key: file.path)];
-                      await Navigator.push(
-                        c,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => ImageEditor(
-                            images: imageItemList,
-                          ),
-                        ),
-                      ).then((value) async {
-                        if (value is List<ImageItem> && value.isNotEmpty == true) {
-                          final ImageItem data = value[0];
-                          var fileName = DateTime.now().millisecondsSinceEpoch.toString();
-                          var extension = p.extension(file.path);
-                          final AssetEntity? entity = await PhotoManager.editor.saveImage(
-                            data.image,
+
+                      Navigator.push(c, MaterialPageRoute(builder: (BuildContext context) {
+                        return ImageEditor(
+                          originImage: file,
+                          // //this is nullable, you can custom new file's save postion
+                          // savePath: customDirectory
+                        );
+                      })).then((result) async {
+                        if (result is EditorImageResult) {
+                          final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+                          final String extension = p.extension(file.path);
+                          final AssetEntity? entity = await PhotoManager.editor.saveImageWithPath(
+                            result.newFile.path,
                             title: '$fileName$extension', // Affects EXIF reading.
                           );
-                          if(entity == null) return;
+                          if (entity == null) {
+                            return;
+                          }
                           previewAssets[currentIndex] = entity;
                           var index = selectedAssets?.indexWhere((element) =>  element.id == asset.id)??-1;
                           if(index >= 0){
@@ -659,7 +659,43 @@ class DefaultAssetPickerViewerBuilderDelegate extends AssetPickerViewerBuilderDe
                           }
                           pageStreamController.add(currentIndex);
                         }
+                      }).catchError((er) {
+                        if (er != null) debugPrint(er.toString());
                       });
+
+                      // final Uint8List uint8List = await file.readAsBytes();
+                      // final List<ImageItem> imageItemList = [ImageItem(img: uint8List, key: file.path)];
+                      // await Navigator.push(
+                      //   c,
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) => ImageEditor(
+                      //       images: imageItemList,
+                      //     ),
+                      //   ),
+                      // ).then((value) async {
+                      //   if (value is List<ImageItem> && value.isNotEmpty == true) {
+                      //     final ImageItem data = value[0];
+                      //     var fileName = DateTime.now().millisecondsSinceEpoch.toString();
+                      //     var extension = p.extension(file.path);
+                      //     final AssetEntity? entity = await PhotoManager.editor.saveImage(
+                      //       data.image,
+                      //       title: '$fileName$extension', // Affects EXIF reading.
+                      //     );
+                      //     if(entity == null) return;
+                      //     previewAssets[currentIndex] = entity;
+                      //     var index = selectedAssets?.indexWhere((element) =>  element.id == asset.id)??-1;
+                      //     if(index >= 0){
+                      //       selectedAssets?[index] = entity;
+                      //       provider?.updatedSelectedAssets(selectedAssets!);
+                      //       selectorProvider?.updatedSelectedAssets(selectedAssets!);
+                      //     }
+                      //     index = selectorProvider?.currentAssets.indexWhere((element) => element.id == asset.id)??-1;
+                      //     if(index >= 0){
+                      //       selectorProvider?.currentAssets[index] = entity;
+                      //     }
+                      //     pageStreamController.add(currentIndex);
+                      //   }
+                      // });
                     },
                     child: Text(
                       textDelegate.edit,
